@@ -6,13 +6,8 @@ const defaultApiUrl = import.meta.env.PROD
 
 const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL || defaultApiUrl,
-  timeout: 50000
-});
-
-api.interceptors.request.use(config => {
-  const token = localStorage.getItem('support_token');
-  if (token) config.headers.Authorization = 'Bearer ' + token;
-  return config;
+  timeout: 50000,
+  withCredentials: true
 });
 
 export const getError = error =>
