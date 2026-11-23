@@ -14,7 +14,7 @@ A full-stack AI-powered support chat application built with React, Express, Mong
 - GitHub Actions syntax checks, backend unit tests and frontend production build
 
 ## Local setup (no Docker)
-Requirements: Node.js 20 or newer, MongoDB Community Server, and an OpenRouter API key.
+Requirements: Node.js 22 or newer, MongoDB Community Server, and an OpenRouter API key. The development server uses Node's built-in `--watch` mode.
 
 1. Start local MongoDB.
 2. In a terminal, run `cd server && npm install`.
