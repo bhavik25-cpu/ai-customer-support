@@ -116,15 +116,17 @@ router.post('/send', asyncHandler(async (req, res) => {
       return res.status(404).json({ message: 'Conversation not found.' });
     }
   } else {
-    conversation = await Conversation.create({ user: req.userId });
+    // Keep new conversations unsaved until the AI reply is available.
+    conversation = new Conversation({ user: req.userId });
   }
 
   conversation.messages.push({ role: 'user', content: message });
   if (conversation.messages.length === 1) {
-    conversation.title = message.replace(/\s+/g, ' ').slice(0, 55);
+    conversation.title = message.replace(/\\s+/g, ' ').slice(0, 55);
   }
-  await conversation.save();
 
+  // Ask the model before persisting, so provider failures do not leave
+  // incomplete first-turn conversations or orphaned user messages.
   const answer = await askOpenRouter(
     conversation.messages.map(item => ({
       role: item.role,
