@@ -30,10 +30,10 @@ const createToken = user =>
     { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
   );
 
-const setSession = (res, user) => {
+const setSession = (res, user, status = 200) => {
   const token = createToken(user);
   res.cookie(COOKIE_NAME, token, cookieOptions());
-  res.json({ user: safeUser(user) });
+  res.status(status).json({ user: safeUser(user) });
 };
 
 router.post('/signup', asyncHandler(async (req, res) => {
@@ -59,7 +59,7 @@ router.post('/signup', asyncHandler(async (req, res) => {
 
   const passwordHash = await bcrypt.hash(password, 12);
   const user = await User.create({ name, email, passwordHash });
-  return setSession(res, user);
+  return setSession(res, user, 201);
 }));
 
 router.post('/login', asyncHandler(async (req, res) => {
