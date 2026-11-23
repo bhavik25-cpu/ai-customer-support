@@ -1,0 +1,10 @@
+{
+  "installCommand": "npm install --prefix server --omit=dev && npm install --prefix client",
+  "buildCommand": "npm run build --prefix client",
+  "outputDirectory": "client/dist",
+  "functions": {
+    "api/[...path].js": {
+      "maxDuration": 60
+    }
+  }
+}
