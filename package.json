@@ -1,0 +1,9 @@
+{
+  "name": "ai-customer-support-deployment",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "npm run build --prefix client"
+  }
+}
