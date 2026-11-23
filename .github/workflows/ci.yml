@@ -20,6 +20,11 @@ jobs:
       - name: Run backend unit tests
         run: npm test
         working-directory: server
+      - name: Report dependency audit findings
+        run: |
+          npm audit --json > audit.json || true
+          node -e "const a=require('./audit.json'); for (const [name,v] of Object.entries(a.vulnerabilities || {})) console.log(JSON.stringify({name,severity:v.severity,isDirect:v.isDirect,range:v.range,fixAvailable:v.fixAvailable}));"
+        working-directory: server
   frontend:
     runs-on: ubuntu-latest
     steps:
